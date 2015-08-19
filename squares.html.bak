@@ -1,12 +1,121 @@
 <!Doctype html>
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<style>
+		.div_square{
+			display:inline-block;
+			border:1px solid black;
+			background-color:white;
+			width:25px;
+			height:25px;
+		}
+		.changeColor{
+			background-color:green;
+		}
+		#container{
+			height:auto;
+			width:25%;
+			margin:auto;
+		}
+		#resetbtn{
+			position:relative;
+			left:47%;
+		}
+		#randomColor{
+			position:relative;
+			left:25%;
+		}
+		#paintBrush{
+			position:relative;
+			left:-2%;
+		}
+	</style>
 </head>
 <body>
-<script>
+<div id="container">
+<button id="resetbtn">Reset</button>
+<button id="randomColor">Random Color</button>
+<button id="paintBrush">Paintbrush</button>
 
+
+<br/>
+</div>
+<script>
+ $(document).ready(function(){
+ $('#resetbtn').click(function(){
+	reset();
+	draw_square_with_value();
+	changeColor();
+ });
+ $('#randomColor').click(function(){
+	reset();
+	draw_square_with_value();
+	randomColor();
+ });
+ $('#paintBrush').click(function(){
+	reset();
+	draw_square_with_value();
+	paintBrush();
+ });
+ 
+	draw_grid(16); //drawing initial 16X16 grid
+	changeColor();
+ });
+ 
+function draw_grid(value){
+	for(var c=1;c<=value;c++){
+		for(var i =1;i<=value;i++){
+			$('#container').append('<div class="div_square"></div>');
+		}
+		$('#container').append("<br />");
+		;}
+		}
+		
+ function draw_square_with_value(){
+	total_squares = prompt("How many square rows and colums do you want to draw? Enter only one number:");
+	$('#container').append("<br />");
+	var id =$('#container'); 
+	for(var c=1;c<=total_squares;c++){
+		for(var i =1;i<=total_squares;i++){
+			$(id).append('<div class="div_square"></div>');
+		}
+		$(id).append("<br />");
+		;}
+	}
+	
+function reset(){
+	$('.div_square').removeClass("changeColor");
+	$('.div_square').remove();
+	$('br').remove();
+}
+
+function changeColor(){
+	$('.div_square').hover(function(){
+		$(this).addClass("changeColor");
+	});
+}
+
+function randomColor(){
+	 var hue = 'rgb(' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ')';
+	$('.div_square').hover(function(){
+		$(this).css({"background-color":hue});
+	});
+}
+function paintBrush(){
+	var percentage = 100;
+	$('.div_square').hover(function(){
+		var color = 'rgb('+percentage+'%,'+percentage+'%,'+percentage+'%)';
+
+		$(this).css({"background-color":color});
+	},function(){
+	percentage = percentage - percentage*0.10;
+	})
+	}
 	
 </script>
-</script>
+
 </body>
 </html>
